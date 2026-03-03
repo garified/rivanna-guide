@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rivanna HPC — Job Submission Guide</title>
+<title>Rivanna HPC — Job Submission Guide (Variant 1)</title>
 <style>
   :root {
     --uva-blue: #232D4B;
@@ -21,6 +21,7 @@
     max-width: 960px;
     margin: 0 auto;
     padding: 20px;
+    font-size: 16px;
   }
   header {
     background: var(--uva-blue);
@@ -50,21 +51,53 @@
     background: white;
     border: 1px solid var(--uva-border);
     border-radius: 8px;
-    padding: 25px 30px;
+    padding: 30px 36px;
     margin-bottom: 20px;
   }
   h2 {
     color: var(--uva-blue);
     font-size: 1.4em;
-    border-bottom: 3px solid var(--uva-orange);
-    padding-bottom: 8px;
+    border-bottom: 2px solid var(--uva-orange);
+    padding-bottom: 4px;
     margin-bottom: 15px;
   }
   h3 {
     color: var(--uva-blue);
     font-size: 1.1em;
-    margin-top: 18px;
+    margin-top: 24px;
     margin-bottom: 8px;
+  }
+
+  /* CSS counter and numbered circle badges for #ood h3 steps */
+  #ood {
+    counter-reset: step-counter;
+  }
+  #ood h3 {
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--uva-border);
+  }
+  #ood h3:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+  #ood h3::before {
+    content: counter(step-counter);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background: var(--uva-blue);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.85em;
+    font-weight: 700;
+    line-height: 1;
   }
 
   pre {
@@ -177,19 +210,20 @@
     border: 1px solid var(--uva-border);
     border-radius: 6px;
     margin: 12px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
   .guide-img.narrow {
-    max-width: 280px;
+    max-width: 360px;
   }
   .guide-img.medium {
-    max-width: 380px;
+    max-width: 480px;
   }
 
   /* Side-by-side step layout */
   .step-row {
     display: flex;
-    gap: 24px;
-    align-items: center;
+    gap: 30px;
+    align-items: flex-start;
     margin: 18px 0;
   }
   .step-row .step-img {
@@ -197,6 +231,17 @@
   }
   .step-row .step-text {
     flex: 1;
+  }
+  .step-label {
+    color: var(--uva-blue);
+    font-weight: 700;
+    font-size: 0.95em;
+    margin-bottom: 6px;
+  }
+  .step-caption {
+    color: var(--uva-gray);
+    font-size: 0.82em;
+    margin-top: 4px;
   }
 
   footer {
@@ -244,7 +289,6 @@
   </ol>
 </nav>
 
-<!-- ============ SECTION 1: OPEN ONDEMAND ============ -->
 <section id="ood">
   <h2>1. Web-Based Access (Open OnDemand)</h2>
   <p>
@@ -256,7 +300,6 @@
     You can safely close the browser and return to it later.
   </p>
 
-  <!-- Step 1 -->
   <h3>Step 1</h3>
   <p>
     Navigate to the <a href="https://www.rc.virginia.edu/userinfo/hpc/login/" target="_blank">UVA HPC login page</a>
@@ -265,12 +308,10 @@
   </p>
   <img src="images/step1.png" alt="RC website with Launch Open OnDemand button highlighted" class="guide-img">
 
-  <!-- Step 2 -->
   <h3>Step 2</h3>
-  <p>You will land on the Open OnDemand dashboard. Click <strong>My Interactive Sessions</strong> in the top navigation bar.</p>
-  <img src="images/step2.png" alt="Open OnDemand dashboard with My Interactive Sessions highlighted" class="guide-img">
+  <p>You will land on the Open OnDemand dashboard.</p>
+  <img src="images/step2.png" alt="Open OnDemand dashboard" class="guide-img">
 
-  <!-- Step 3 -->
   <h3>Step 3</h3>
   <div class="step-row">
     <div class="step-img">
@@ -278,22 +319,13 @@
     </div>
     <div class="step-text">
       <p>
-        Select <strong>JupyterLab</strong> under Servers.
+        Click <strong>Interactive Apps</strong> in the top navigation bar,
+        then select <strong>JupyterLab</strong> under Servers.
       </p>
-      <p>Other available apps include:</p>
-      <ul>
-        <li><strong>Code Server</strong> &mdash; VS Code in the browser</li>
-        <li><strong>RStudio Server</strong> &mdash; for R workflows</li>
-        <li><strong>MATLAB Desktop / Web</strong> &mdash; for MATLAB users</li>
-        <li><strong>Desktop</strong> &mdash; full Linux desktop environment</li>
-      </ul>
-      <div class="highlight">
-        <strong>JupyterLab</strong> is the most common choice for Python-based work.
-      </div>
+      <p>Other available apps include RStudio Server, MATLAB, Code Server, and Desktop.</p>
     </div>
   </div>
 
-  <!-- Step 4 -->
   <h3>Step 4</h3>
   <div class="step-row">
     <div class="step-img">
@@ -302,43 +334,24 @@
     <div class="step-text">
       <p>Configure your session:</p>
       <ul>
-        <li><strong>Rivanna/Afton Partition</strong> &mdash; select &ldquo;GPU&rdquo; for GPU-enabled jobs, or &ldquo;Standard&rdquo; for CPU-only jobs</li>
-        <li><strong>Number of hours</strong> &mdash; maximum wall time for your session (up to 72 hours)</li>
-        <li><strong>Number of cores</strong> &mdash; CPU cores allocated</li>
-        <li><strong>Memory</strong> &mdash; RAM in GB</li>
-        <li><strong>Work Directory</strong> &mdash; where your session&rsquo;s files are stored (see table below)</li>
-        <li><strong>Allocation</strong> &mdash; your group&rsquo;s allocation</li>
-        <li><strong>GPU type</strong> &mdash; choose a specific GPU or leave as &ldquo;default&rdquo;</li>
-        <li><strong>Number of GPUs</strong> &mdash; how many GPUs to request</li>
+        <li><strong>Rivanna/Afton Partition:</strong> GPU</li>
+        <li><strong>Number of hours:</strong> 4</li>
+        <li><strong>Number of cores:</strong> 8</li>
+        <li><strong>Memory:</strong> 64 GB</li>
+        <li><strong>Work Directory:</strong> SCRATCH</li>
+        <li><strong>Allocation:</strong> your allocation</li>
+        <li><strong>GPU type:</strong> select a type or leave as &ldquo;default&rdquo;</li>
+        <li><strong>Number of GPUs:</strong> 1</li>
       </ul>
-      <p>The screenshot shows one example configuration. Adjust values to match your workload.</p>
       <p>Click <strong>Launch</strong> when ready.</p>
-      <div class="highlight">
-        <strong>Available GPU types:</strong> <code>a6000</code>, <code>a40</code>, <code>v100</code>, <code>a100</code>, <code>h200</code>.
-        If unsure, leave GPU type as &ldquo;default&rdquo; and the scheduler will assign any available GPU.
-      </div>
     </div>
   </div>
 
-  <h3>Work Directory Reference</h3>
-  <table>
-    <tr><th>Option</th><th>Path</th><th>Size</th><th>Notes</th></tr>
-    <tr><td><strong>SCRATCH</strong></td><td><code>/scratch/&lt;computing_id&gt;</code></td><td>10 TB</td><td>Fast, no backups, files purged after 90 days of inactivity</td></tr>
-    <tr><td><strong>HOME</strong></td><td><code>/home/&lt;computing_id&gt;</code></td><td>200 GB</td><td>Weekly snapshots, slower I/O</td></tr>
-    <tr><td><strong>PROJECT</strong></td><td>Leased group storage</td><td>Varies</td><td>Shared research group storage, must be requested</td></tr>
-    <tr><td><strong>STANDARD</strong></td><td>Leased group storage</td><td>Varies</td><td>Shared internal/public storage, must be requested</td></tr>
-  </table>
-  <div class="highlight">
-    <strong>SCRATCH</strong> is the default and recommended for most jobs. Backup important results to HOME afterward.
-  </div>
-
-  <!-- Step 5 -->
   <h3>Step 5</h3>
   <p>Once the session is running, click <strong>Connect to Jupyter</strong> to open JupyterLab in a new tab.</p>
   <img src="images/step5.png" alt="Running session with Connect to Jupyter button highlighted" class="guide-img">
 </section>
 
-<!-- ============ SECTION 2: SSH LOGIN ============ -->
 <section id="login">
   <h2>2. SSH Login</h2>
   <p>To connect to Rivanna, open a terminal on your local computer and run:</p>
@@ -363,7 +376,6 @@
   </ol>
 </section>
 
-<!-- ============ SECTION 3: SUBMITTING JOBS ============ -->
 <section id="jobs">
   <h2>3. Submitting Jobs</h2>
   <p>
@@ -401,7 +413,6 @@
     </div>
   </div>
 
-  <!-- 3.1 Interactive -->
   <h3 id="interactive">3.1 Interactive Jobs</h3>
   <p>Request an interactive session with one A6000 GPU:</p>
   <pre><span class="prompt">$</span> ijob <span class="flag">-A</span> mylab <span class="flag">-p</span> gpu <span class="flag">--gres</span>=gpu:a6000:1 <span class="flag">-c</span> 8 <span class="flag">--mem</span>=64G <span class="flag">-t</span> 4:00:00</pre>
@@ -424,7 +435,6 @@
   <p>To end the session:</p>
   <pre><span class="prompt">$</span> exit</pre>
 
-  <!-- 3.2 Batch -->
   <h3 id="batch">3.2 Batch Jobs</h3>
   <p>Create a SLURM script (e.g. <code>job.slurm</code>):</p>
   <pre><span class="comment">#!/bin/bash</span>
@@ -452,7 +462,6 @@ python my_script.py</pre>
   </table>
 </section>
 
-<!-- ============ SECTION 4: MONITORING ============ -->
 <section id="monitoring">
   <h2>4. Monitoring &amp; Managing Jobs</h2>
 
@@ -472,7 +481,6 @@ python my_script.py</pre>
   </div>
 </section>
 
-<!-- ============ SECTION 5: PITFALLS ============ -->
 <section id="pitfalls">
   <h2>5. Common Pitfalls</h2>
 
@@ -499,7 +507,6 @@ python my_script.py</pre>
   </div>
 </section>
 
-<!-- ============ SECTION 6: REFERENCES ============ -->
 <section id="references">
   <h2>6. References</h2>
   <ul>

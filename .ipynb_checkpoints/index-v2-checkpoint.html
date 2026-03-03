@@ -179,24 +179,23 @@
     margin: 12px 0;
   }
   .guide-img.narrow {
-    max-width: 280px;
+    max-width: 360px;
   }
   .guide-img.medium {
-    max-width: 380px;
+    max-width: 480px;
   }
 
-  /* Side-by-side step layout */
-  .step-row {
-    display: flex;
-    gap: 24px;
-    align-items: center;
+  /* Float-based step layout */
+  .step-float {
     margin: 18px 0;
+    overflow: hidden; /* clearfix */
   }
-  .step-row .step-img {
-    flex-shrink: 0;
+  .step-float .guide-img {
+    float: left;
+    margin: 0 24px 12px 0;
   }
-  .step-row .step-text {
-    flex: 1;
+  .step-float .step-text {
+    overflow: hidden; /* keeps text from wrapping under image */
   }
 
   footer {
@@ -267,18 +266,17 @@
 
   <!-- Step 2 -->
   <h3>Step 2</h3>
-  <p>You will land on the Open OnDemand dashboard. Click <strong>My Interactive Sessions</strong> in the top navigation bar.</p>
-  <img src="images/step2.png" alt="Open OnDemand dashboard with My Interactive Sessions highlighted" class="guide-img">
+  <p>You will land on the Open OnDemand dashboard.</p>
+  <img src="images/step2.png" alt="Open OnDemand dashboard" class="guide-img">
 
   <!-- Step 3 -->
   <h3>Step 3</h3>
-  <div class="step-row">
-    <div class="step-img">
-      <img src="images/step3.png" alt="Interactive Apps dropdown with JupyterLab highlighted" class="guide-img narrow">
-    </div>
+  <div class="step-float">
+    <img src="images/step3.png" alt="Interactive Apps dropdown with JupyterLab highlighted" class="guide-img narrow">
     <div class="step-text">
       <p>
-        Select <strong>JupyterLab</strong> under Servers.
+        Click <strong>Interactive Apps</strong> in the top navigation bar,
+        then select <strong>JupyterLab</strong> under Servers.
       </p>
       <p>Other available apps include:</p>
       <ul>
@@ -288,48 +286,37 @@
         <li><strong>Desktop</strong> &mdash; full Linux desktop environment</li>
       </ul>
       <div class="highlight">
-        <strong>JupyterLab</strong> is the most common choice for Python-based work.
+        <strong>JupyterLab</strong> is the most common choice for Python-based work, including machine learning and data analysis.
       </div>
     </div>
   </div>
 
   <!-- Step 4 -->
   <h3>Step 4</h3>
-  <div class="step-row">
-    <div class="step-img">
-      <img src="images/step4.png" alt="JupyterLab configuration form" class="guide-img medium">
-    </div>
+  <div class="step-float">
+    <img src="images/step4.png" alt="JupyterLab configuration form" class="guide-img medium">
     <div class="step-text">
       <p>Configure your session:</p>
       <ul>
-        <li><strong>Rivanna/Afton Partition</strong> &mdash; select &ldquo;GPU&rdquo; for GPU-enabled jobs, or &ldquo;Standard&rdquo; for CPU-only jobs</li>
-        <li><strong>Number of hours</strong> &mdash; maximum wall time for your session (up to 72 hours)</li>
-        <li><strong>Number of cores</strong> &mdash; CPU cores allocated</li>
-        <li><strong>Memory</strong> &mdash; RAM in GB</li>
-        <li><strong>Work Directory</strong> &mdash; where your session&rsquo;s files are stored (see table below)</li>
-        <li><strong>Allocation</strong> &mdash; your group&rsquo;s allocation</li>
-        <li><strong>GPU type</strong> &mdash; choose a specific GPU or leave as &ldquo;default&rdquo;</li>
-        <li><strong>Number of GPUs</strong> &mdash; how many GPUs to request</li>
+        <li><strong>Rivanna/Afton Partition:</strong> GPU</li>
+        <li><strong>Number of hours:</strong> 4</li>
+        <li><strong>Number of cores:</strong> 8</li>
+        <li><strong>Memory:</strong> 64 GB</li>
+        <li><strong>Work Directory:</strong> SCRATCH</li>
+        <li><strong>Allocation:</strong> your allocation</li>
+        <li><strong>GPU type:</strong> select a type or leave as &ldquo;default&rdquo;</li>
+        <li><strong>Number of GPUs:</strong> 1</li>
       </ul>
-      <p>The screenshot shows one example configuration. Adjust values to match your workload.</p>
       <p>Click <strong>Launch</strong> when ready.</p>
       <div class="highlight">
         <strong>Available GPU types:</strong> <code>a6000</code>, <code>a40</code>, <code>v100</code>, <code>a100</code>, <code>h200</code>.
         If unsure, leave GPU type as &ldquo;default&rdquo; and the scheduler will assign any available GPU.
       </div>
+      <div class="highlight">
+        <strong>Slurm Options:</strong> Use the optional field at the bottom to pass additional constraints,
+        e.g. <code>--constraint=a6000</code> to request a specific GPU type.
+      </div>
     </div>
-  </div>
-
-  <h3>Work Directory Reference</h3>
-  <table>
-    <tr><th>Option</th><th>Path</th><th>Size</th><th>Notes</th></tr>
-    <tr><td><strong>SCRATCH</strong></td><td><code>/scratch/&lt;computing_id&gt;</code></td><td>10 TB</td><td>Fast, no backups, files purged after 90 days of inactivity</td></tr>
-    <tr><td><strong>HOME</strong></td><td><code>/home/&lt;computing_id&gt;</code></td><td>200 GB</td><td>Weekly snapshots, slower I/O</td></tr>
-    <tr><td><strong>PROJECT</strong></td><td>Leased group storage</td><td>Varies</td><td>Shared research group storage, must be requested</td></tr>
-    <tr><td><strong>STANDARD</strong></td><td>Leased group storage</td><td>Varies</td><td>Shared internal/public storage, must be requested</td></tr>
-  </table>
-  <div class="highlight">
-    <strong>SCRATCH</strong> is the default and recommended for most jobs. Backup important results to HOME afterward.
   </div>
 
   <!-- Step 5 -->

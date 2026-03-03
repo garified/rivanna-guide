@@ -171,34 +171,6 @@
     margin-top: 8px;
   }
 
-  /* Guide images */
-  .guide-img {
-    max-width: 100%;
-    border: 1px solid var(--uva-border);
-    border-radius: 6px;
-    margin: 12px 0;
-  }
-  .guide-img.narrow {
-    max-width: 280px;
-  }
-  .guide-img.medium {
-    max-width: 380px;
-  }
-
-  /* Side-by-side step layout */
-  .step-row {
-    display: flex;
-    gap: 24px;
-    align-items: center;
-    margin: 18px 0;
-  }
-  .step-row .step-img {
-    flex-shrink: 0;
-  }
-  .step-row .step-text {
-    flex: 1;
-  }
-
   footer {
     text-align: center;
     color: var(--uva-gray);
@@ -214,8 +186,6 @@
     header { padding: 20px; }
     section { padding: 15px; }
     .job-types { flex-direction: column; }
-    .step-row { flex-direction: column; }
-    .guide-img.narrow, .guide-img.medium { max-width: 100%; }
   }
 </style>
 </head>
@@ -230,8 +200,8 @@
 <nav>
   <h2>Table of Contents</h2>
   <ol>
-    <li><a href="#ood">Web-Based Access (Open OnDemand)</a></li>
     <li><a href="#login">SSH Login</a></li>
+    <li><a href="#allocations">Check Your Allocations</a></li>
     <li><a href="#jobs">Submitting Jobs</a>
       <ol>
         <li><a href="#interactive">Interactive Jobs</a></li>
@@ -244,104 +214,10 @@
   </ol>
 </nav>
 
-<!-- ============ SECTION 1: OPEN ONDEMAND ============ -->
-<section id="ood">
-  <h2>1. Web-Based Access (Open OnDemand)</h2>
-  <p>
-    Open OnDemand provides browser-based access to Rivanna. No VPN is required.
-    The following walkthrough demonstrates how to launch a JupyterLab session with GPU resources.
-  </p>
-  <p>
-    Once a session is allocated, it continues running on the cluster independently of your local machine.
-    You can safely close the browser and return to it later.
-  </p>
-
-  <!-- Step 1 -->
-  <h3>Step 1</h3>
-  <p>
-    Navigate to the <a href="https://www.rc.virginia.edu/userinfo/hpc/login/" target="_blank">UVA HPC login page</a>
-    and click &ldquo;Launch Open OnDemand,&rdquo; or go directly to
-    <a href="https://ood.hpc.virginia.edu" target="_blank">ood.hpc.virginia.edu</a>.
-  </p>
-  <img src="images/step1.png" alt="RC website with Launch Open OnDemand button highlighted" class="guide-img">
-
-  <!-- Step 2 -->
-  <h3>Step 2</h3>
-  <p>You will land on the Open OnDemand dashboard. Click <strong>My Interactive Sessions</strong> in the top navigation bar.</p>
-  <img src="images/step2.png" alt="Open OnDemand dashboard with My Interactive Sessions highlighted" class="guide-img">
-
-  <!-- Step 3 -->
-  <h3>Step 3</h3>
-  <div class="step-row">
-    <div class="step-img">
-      <img src="images/step3.png" alt="Interactive Apps dropdown with JupyterLab highlighted" class="guide-img narrow">
-    </div>
-    <div class="step-text">
-      <p>
-        Select <strong>JupyterLab</strong> under Servers.
-      </p>
-      <p>Other available apps include:</p>
-      <ul>
-        <li><strong>Code Server</strong> &mdash; VS Code in the browser</li>
-        <li><strong>RStudio Server</strong> &mdash; for R workflows</li>
-        <li><strong>MATLAB Desktop / Web</strong> &mdash; for MATLAB users</li>
-        <li><strong>Desktop</strong> &mdash; full Linux desktop environment</li>
-      </ul>
-      <div class="highlight">
-        <strong>JupyterLab</strong> is the most common choice for Python-based work.
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 4 -->
-  <h3>Step 4</h3>
-  <div class="step-row">
-    <div class="step-img">
-      <img src="images/step4.png" alt="JupyterLab configuration form" class="guide-img medium">
-    </div>
-    <div class="step-text">
-      <p>Configure your session:</p>
-      <ul>
-        <li><strong>Rivanna/Afton Partition</strong> &mdash; select &ldquo;GPU&rdquo; for GPU-enabled jobs, or &ldquo;Standard&rdquo; for CPU-only jobs</li>
-        <li><strong>Number of hours</strong> &mdash; maximum wall time for your session (up to 72 hours)</li>
-        <li><strong>Number of cores</strong> &mdash; CPU cores allocated</li>
-        <li><strong>Memory</strong> &mdash; RAM in GB</li>
-        <li><strong>Work Directory</strong> &mdash; where your session&rsquo;s files are stored (see table below)</li>
-        <li><strong>Allocation</strong> &mdash; your group&rsquo;s allocation</li>
-        <li><strong>GPU type</strong> &mdash; choose a specific GPU or leave as &ldquo;default&rdquo;</li>
-        <li><strong>Number of GPUs</strong> &mdash; how many GPUs to request</li>
-      </ul>
-      <p>The screenshot shows one example configuration. Adjust values to match your workload.</p>
-      <p>Click <strong>Launch</strong> when ready.</p>
-      <div class="highlight">
-        <strong>Available GPU types:</strong> <code>a6000</code>, <code>a40</code>, <code>v100</code>, <code>a100</code>, <code>h200</code>.
-        If unsure, leave GPU type as &ldquo;default&rdquo; and the scheduler will assign any available GPU.
-      </div>
-    </div>
-  </div>
-
-  <h3>Work Directory Reference</h3>
-  <table>
-    <tr><th>Option</th><th>Path</th><th>Size</th><th>Notes</th></tr>
-    <tr><td><strong>SCRATCH</strong></td><td><code>/scratch/&lt;computing_id&gt;</code></td><td>10 TB</td><td>Fast, no backups, files purged after 90 days of inactivity</td></tr>
-    <tr><td><strong>HOME</strong></td><td><code>/home/&lt;computing_id&gt;</code></td><td>200 GB</td><td>Weekly snapshots, slower I/O</td></tr>
-    <tr><td><strong>PROJECT</strong></td><td>Leased group storage</td><td>Varies</td><td>Shared research group storage, must be requested</td></tr>
-    <tr><td><strong>STANDARD</strong></td><td>Leased group storage</td><td>Varies</td><td>Shared internal/public storage, must be requested</td></tr>
-  </table>
-  <div class="highlight">
-    <strong>SCRATCH</strong> is the default and recommended for most jobs. Backup important results to HOME afterward.
-  </div>
-
-  <!-- Step 5 -->
-  <h3>Step 5</h3>
-  <p>Once the session is running, click <strong>Connect to Jupyter</strong> to open JupyterLab in a new tab.</p>
-  <img src="images/step5.png" alt="Running session with Connect to Jupyter button highlighted" class="guide-img">
-</section>
-
-<!-- ============ SECTION 2: SSH LOGIN ============ -->
+<!-- ============ SECTION 1: SSH LOGIN ============ -->
 <section id="login">
-  <h2>2. SSH Login</h2>
-  <p>To connect to Rivanna, open a terminal on your local computer and run:</p>
+  <h2>1. SSH Login</h2>
+  <p>To connect to Rivanna, open a terminal and run:</p>
   <pre><span class="prompt">$</span> ssh <span class="flag">-Y</span> &lt;computing_id&gt;@login.hpc.virginia.edu</pre>
   <p>The <code>-Y</code> flag enables X11 forwarding for GUI applications.</p>
 
@@ -361,6 +237,20 @@
     <li>Open the Command Palette (<code>Ctrl+Shift+P</code>) &rarr; <em>Remote-SSH: Connect to Host</em>.</li>
     <li>Enter: <code>&lt;computing_id&gt;@login.hpc.virginia.edu</code></li>
   </ol>
+</section>
+
+<!-- ============ SECTION 2: ALLOCATIONS ============ -->
+<section id="allocations">
+  <h2>2. Check Your Allocations</h2>
+  <p>Before submitting a job, verify which allocations are available to you and their remaining balance:</p>
+  <pre><span class="prompt">$</span> allocations</pre>
+  <p>Example output:</p>
+  <pre><span class="comment">Account              Balance      Available</span>
+<span class="comment">─────────────────    ─────────    ─────────</span>
+mylab                10000000     9932403</pre>
+  <div class="highlight">
+    <strong>Note:</strong> Use the account name (e.g. <code>mylab</code>) with the <code>-A</code> flag when submitting jobs.
+  </div>
 </section>
 
 <!-- ============ SECTION 3: SUBMITTING JOBS ============ -->
@@ -403,22 +293,21 @@
 
   <!-- 3.1 Interactive -->
   <h3 id="interactive">3.1 Interactive Jobs</h3>
-  <p>Request an interactive session with one A6000 GPU:</p>
-  <pre><span class="prompt">$</span> ijob <span class="flag">-A</span> mylab <span class="flag">-p</span> gpu <span class="flag">--gres</span>=gpu:a6000:1 <span class="flag">-c</span> 8 <span class="flag">--mem</span>=64G <span class="flag">-t</span> 4:00:00</pre>
+  <p>Request an interactive session with one A100 GPU:</p>
+  <pre><span class="prompt">$</span> ijob <span class="flag">-A</span> mylab <span class="flag">-p</span> gpu <span class="flag">--gres</span>=gpu:a100:1 <span class="flag">-c</span> 8 <span class="flag">--mem</span>=64G <span class="flag">-t</span> 4:00:00</pre>
 
   <table>
     <tr><th>Flag</th><th>Meaning</th></tr>
     <tr><td><code>-A mylab</code></td><td>Your allocation account</td></tr>
     <tr><td><code>-p gpu</code></td><td>GPU partition</td></tr>
-    <tr><td><code>--gres=gpu:a6000:1</code></td><td>Request 1 A6000 GPU</td></tr>
+    <tr><td><code>--gres=gpu:a100:1</code></td><td>Request 1 A100 GPU</td></tr>
     <tr><td><code>-c 8</code></td><td>8 CPU cores</td></tr>
     <tr><td><code>--mem=64G</code></td><td>64 GB of memory</td></tr>
     <tr><td><code>-t 4:00:00</code></td><td>Time limit (4 hours)</td></tr>
   </table>
 
   <div class="highlight">
-    <strong>Available GPU types:</strong> <code>a6000</code>, <code>a40</code>, <code>v100</code>, <code>a100</code>, <code>h200</code>.
-    Replace <code>a6000</code> in <code>--gres=gpu:a6000:1</code> with the desired type.
+    <strong>80GB A100:</strong> To request the 80GB variant specifically, add <code>--constraint=a100_80gb</code>.
   </div>
 
   <p>To end the session:</p>
@@ -430,7 +319,7 @@
   <pre><span class="comment">#!/bin/bash</span>
 #SBATCH -A mylab
 #SBATCH -p gpu
-#SBATCH --gres=gpu:a6000:1
+#SBATCH --gres=gpu:a100:1
 #SBATCH -c 8
 #SBATCH --mem=64G
 #SBATCH -t 8:00:00
